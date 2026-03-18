@@ -207,6 +207,19 @@
       font-weight: 600;
     }
 
+    .field-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.35;
+      background: #f9fafb;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px dashed #d1d5db;
+    }
+    
+    .field-desc b { color: var(--text); }
+
     .footer-copyright {
       text-align: center;
       margin-top: 30px;
@@ -271,34 +284,48 @@
         <h2 class="section-title">1. REQUISITI SOGGETTIVI E IMPRESA</h2>
         <div class="grid-3">
           <div class="field full"><label>Ragione sociale / Cliente</label><input name="cliente"></div>
-          <div class="field">
+          
+          <div class="field full">
             <label>Categoria Soggetto</label>
             <select name="categoriaSoggetto">
               <option value=""></option>
-              <option>Imprenditore agricolo / Prod. Primaria (Tab 1A / 4A)</option>
+              <option>Imprenditore agricolo (Tab 1A / 4A)</option>
               <option>Impresa agroindustriale (Tab 2A)</option>
               <option>Trasformazione in non agricolo (Tab 3A)</option>
               <option>Cooperativa agricola</option>
-              <option>Soggetto aggregato (Es. CER, ATI)</option>
+              <option>Soggetto aggregato</option>
             </select>
+            <div class="field-desc">
+              <b>Imprenditore agricolo:</b> Iscritto nella sezione speciale del registro imprese, esercita coltivazione del fondo, silvicoltura, allevamento di animali e attività connesse (art. 2135 c.c.).<br>
+              <b>Impresa agroindustriale:</b> Attiva nella lavorazione e trasformazione dei prodotti agricoli con codice ATECO prevalente ammissibile.<br>
+              <b>Cooperativa agricola:</b> Svolge attività di cui all'art. 2135 c.c. ed è iscritta nella sezione speciale del registro imprese.<br>
+              <b>Soggetto aggregato:</b> A.T.I., R.T.I., reti di imprese agricole, CER. Tutte le aziende devono ricadere nella medesima Tabella dell'Allegato A.
+            </div>
           </div>
+          
           <div class="field"><label>Codice ATECO Prevalente</label><input name="ateco" placeholder="Es. 01.11.10"></div>
           <div class="field">
             <label>Iscritta come "Attiva" al Registro Imprese</label>
             <select name="attivaCciaa"><option value=""></option><option>Sì</option><option>No (Non ammissibile)</option></select>
           </div>
           <div class="field">
+            <label>Esonero contabilità IVA</label>
+            <select name="esoneroIva"><option value=""></option><option>No</option><option>Sì (Non ammissibile)</option></select>
+          </div>
+
+          <div class="field full">
             <label>Dimensione Impresa</label>
             <select name="dimensioneImpresa">
               <option value=""></option>
-              <option>Piccola</option>
-              <option>Media</option>
-              <option>Grande</option>
+              <option>Piccola impresa</option>
+              <option>Media impresa</option>
+              <option>Grande impresa</option>
             </select>
-          </div>
-          <div class="field">
-            <label>Esonero contabilità IVA</label>
-            <select name="esoneroIva"><option value=""></option><option>No</option><option>Sì (Non ammissibile)</option></select>
+            <div class="field-desc">
+              <b>Piccola:</b> &lt; 50 occupati <u>E</u> fatturato annuo e/o totale di bilancio annuo &le; 10 milioni di euro.<br>
+              <b>Media:</b> &lt; 250 occupati <u>E</u> fatturato annuo &le; 50 milioni di euro e/o totale di bilancio annuo &le; 43 milioni di euro.<br>
+              <b>Grande:</b> &gt; 250 occupati, fatturato &gt; 50 milioni di euro e/o totale di bilancio annuo &gt; 43 milioni di euro. <i>(Richiede analisi dello scenario controfattuale)</i>.
+            </div>
           </div>
         </div>
       </div>
