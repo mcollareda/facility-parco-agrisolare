@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checklist Parco Agrisolare Facility - HUB</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #d1d5db;
+      /* Colori Aziendali HUB */
+      --primary: #3a73d8;      /* Blu */
+      --primary-dark: #3c364c; /* Viola */
+      --accent: #f0f4fc;
+      --danger: #b91c1c;
+      --success: #15803d;
+      --shadow: 0 8px 24px rgba(0,0,0,0.08);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    /* --- SCHERMATA DI LOGIN --- */
+    #login-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100vh;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    
+    .login-box {
+      background: white;
+      padding: 40px 30px;
+      border-radius: var(--radius);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    .login-box h2 {
+      color: var(--primary-dark);
+      margin: 0 0 10px 0;
+    }
+
+    .login-box p {
+      color: var(--muted);
+      margin: 0 0 20px 0;
+      font-size: 0.95rem;
+    }
+
+    .login-box input {
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    
+    .login-box input:focus {
+      outline: 2px solid var(--primary);
+      border-color: transparent;
+    }
+
+    .login-box button {
+      width: 100%;
+      font-size: 1.1rem;
+      padding: 14px;
+    }
+
+    /* --- LAYOUT PRINCIPALE --- */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .header-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .company-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 6px;
+    }
+
+    .header h1 { margin: 0 0 8px; font-size: 2rem; }
+    .header p { margin: 0; opacity: 0.95; font-size: 1.05rem; }
+
+    .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: opacity 0.2s;
+    }
+    button:hover { opacity: 0.9; }
+
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-danger { background: var(--danger); color: white; }
+    
+    .btn-add {
+      width: 100%;
+      margin-top: 10px;
+      background: transparent;
+      border: 2px dashed var(--primary);
+      color: var(--primary);
+      padding: 12px;
+      font-weight: bold;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+    .btn-add:hover { background: #f0f4fc; }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 1.25rem;
+      color: var(--primary);
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 8px;
+    }
+
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field.full { grid-column: 1 / -1; }
+
+    label { font-size: 0.92rem; font-weight: 700; }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.96rem;
+      background: #fff;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid var(--primary);
+      border-color: transparent;
+    }
+
+    textarea { min-height: 90px; resize: vertical; }
+
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      background: #fafafa;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .check-item { display: flex; align-items: center; gap: 8px; font-size: 0.95rem; }
+    .check-item input[type="checkbox"] { width: 18px; height: 18px; margin: 0; accent-color: var(--primary); }
+
+    .help-text {
+      font-size: 0.85rem;
+      color: var(--danger);
+      margin-top: -4px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .footer-copyright {
+      text-align: center;
+      margin-top: 30px;
+      padding: 20px 10px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 820px) {
+      .grid, .grid-3, .check-grid { grid-template-columns: 1fr; }
+      .header h1 { font-size: 1.6rem; }
+      .container { padding: 12px; }
+    }
+
+    @media print {
+      body { background: white; }
+      #login-overlay { display: none !important; }
+      #main-content { display: block !important; }
+      .toolbar, .btn-add { display: none !important; }
+      .card, .header { box-shadow: none; border: 1px solid #d1d5db; page-break-inside: avoid; }
+      .header { color: var(--primary-dark); background: white; border-bottom: 3px solid var(--primary); }
+      .company-name { color: var(--muted); }
+      div[id^="ee-bill-"], div[id^="gas-bill-"] { 
+        border: none !important; padding: 0 !important; background: transparent !important; margin-bottom: 10px !important; border-bottom: 1px solid #eee !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="login-overlay">
+    <div class="login-box">
+      <h2>Area Riservata</h2>
+      <p>Inserisci la password per accedere al modulo.</p>
+      <input type="password" id="password-input" placeholder="Password">
+      <button type="button" class="btn-primary" onclick="checkPassword()">Accedi</button>
+      <div id="login-error" style="color: var(--danger); display: none; font-size: 0.9rem; margin-top: 12px; font-weight: bold;">
+        Password errata, riprova.
+      </div>
+    </div>
+  </div>
+
+  <div class="container" id="main-content" style="display: none;">
+    
+    <div class="header">
+      <div class="header-content">
+        <div class="company-name">HUB - Società di Ingegneria</div>
+        <h1>CHECKLIST FATTIBILITÀ PARCO AGRISOLARE</h1>
+        <p>Valutazione requisiti tecnici e soggettivi - Bando PNRR Facility Parco Agrisolare.</p>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <button class="btn-primary" type="button" onclick="window.print()">Stampa / Esporta PDF</button>
+      <button class="btn-danger" type="button" onclick="document.getElementById('checklistAgrisolare').reset()">Azzera modulo</button>
+    </div>
+
+    <form id="checklistAgrisolare">
+      
+      <div class="card">
+        <h2 class="section-title">1. REQUISITI SOGGETTIVI E IMPRESA</h2>
+        <div class="grid-3">
+          <div class="field full"><label>Ragione sociale / Cliente</label><input name="cliente"></div>
+          <div class="field">
+            <label>Categoria Soggetto</label>
+            <select name="categoriaSoggetto">
+              <option value=""></option>
+              <option>Imprenditore agricolo / Prod. Primaria (Tab 1A / 4A)</option>
+              <option>Impresa agroindustriale (Tab 2A)</option>
+              <option>Trasformazione in non agricolo (Tab 3A)</option>
+              <option>Cooperativa agricola</option>
+              <option>Soggetto aggregato (Es. CER, ATI)</option>
+            </select>
+          </div>
+          <div class="field"><label>Codice ATECO Prevalente</label><input name="ateco" placeholder="Es. 01.11.10"></div>
+          <div class="field">
+            <label>Iscritta come "Attiva" al Registro Imprese</label>
+            <select name="attivaCciaa"><option value=""></option><option>Sì</option><option>No (Non ammissibile)</option></select>
+          </div>
+          <div class="field">
+            <label>Dimensione Impresa</label>
+            <select name="dimensioneImpresa">
+              <option value=""></option>
+              <option>Piccola</option>
+              <option>Media</option>
+              <option>Grande</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Esonero contabilità IVA</label>
+            <select name="esoneroIva"><option value=""></option><option>No</option><option>Sì (Non ammissibile)</option></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">2. DATI FABBRICATO E DISPONIBILITÀ</h2>
+        <div class="grid-3">
+          <div class="field full"><label>Indirizzo Edificio</label><input name="indirizzoEdificio"></div>
+          <div class="field">
+            <label>Titolo di Disponibilità</label>
+            <select name="titoloDisponibilita">
+              <option value=""></option>
+              <option>Proprietà</option>
+              <option>Locazione / Affitto (Esteso 5 anni post-lavori)</option>
+              <option>Comodato d'uso / Leasing</option>
+            </select>
+          </div>
+          <div class="field"><label>Categoria Catastale Fabbricato</label><input name="catCatastale" placeholder="Es. D/10, C/2, Serra..."></div>
+          <div class="field">
+            <label>Annotazione Ruralità Fiscale</label>
+            <select name="ruralita"><option value=""></option><option>Presente</option><option>Assente (Serve Relazione)</option><option>Non necessaria (D/10)</option></select>
+          </div>
+          <div class="field">
+            <label>Presenza Amianto/Eternit in copertura</label>
+            <select name="presenzaAmianto"><option value=""></option><option>Assente</option><option>Presente (Obbligo rimozione)</option></select>
+          </div>
+          <div class="field">
+            <label>Lavori o Ordini già avviati?</label>
+            <select name="avvioLavori"><option value=""></option><option>No</option><option>Sì (Progetto bloccato)</option></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">3. ANALISI CONSUMI: ENERGIA ELETTRICA (POD Principale)</h2>
+        <div class="help-text">ATTENZIONE: Per le aziende agricole primarie (Tab 1A) inserire i consumi di 12 mesi consecutivi per attestare il limite di autoconsumo.</div>
+        <div class="grid" style="margin-bottom: 14px;">
+          <div class="field"><label>Anno di Riferimento Consumi</label><input type="text" name="annoRifEE" placeholder="Es. 2023"></div>
+          <div class="field"><label>L'intestatario POD coincide col Beneficiario?</label><select name="intestatarioPod"><option value=""></option><option>Sì</option><option>No (Da sanare/giustificare)</option></select></div>
+        </div>
+        
+        <div id="ee-bills-container"></div>
+        <button type="button" class="btn-add" onclick="addEEBill()">+ AGGIUNGI BOLLETTA ELETTRICA</button>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">4. ANALISI CONSUMI: COMBUSTIBILI TERMICI</h2>
+        <div class="help-text">I consumi per uso termico (es. riscaldamento serre, stalle) possono essere convertiti in energia elettrica equivalente per ampliare la taglia dell'impianto FV.</div>
+        
+        <div id="gas-bills-container"></div>
+        <button type="button" class="btn-add" onclick="addGasBill()">+ AGGIUNGI FATTURA COMBUSTIBILE</button>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">5. CARATTERISTICHE IMPIANTO FOTOVOLTAICO</h2>
+        <div class="grid-3">
+          <div class="field full"><label>Producibilità Stimata con PVGIS (Nuovo Impianto) [kWh/anno]</label><input type="number" step="1" name="producibilitaPvgis" placeholder="Inserire valore dal report PVGIS-SARAH3"></div>
+          <div class="field"><label>Potenza di Picco Prevista [kWp]</label><input type="number" step="0.1" name="potenzaKw" placeholder="Min 6 kWp - Max 1000 kWp"></div>
+          <div class="field">
+            <label>Registro Moduli ENEA</label>
+            <select name="registroEnea">
+              <option value=""></option>
+              <option>Categoria A (Max 1.000 €/kWp)</option>
+              <option>Categoria B o C (Max 1.500 €/kWp)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Presenza Impianto FV Esistente su stesso POD?</label>
+            <select name="fvEsistente"><option value=""></option><option>No</option><option>Sì (Calcolare e sottrarre la sua produzione)</option></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">6. INTERVENTI COMPLEMENTARI (OPZIONALI)</h2>
+        <div class="grid-3">
+          <div class="field">
+            <label>Rimozione Amianto (Max 700 €/kWp compl.)</label>
+            <select name="rimozioneAmianto"><option value=""></option><option>Sì (Integrale)</option><option>No</option></select>
+          </div>
+          <div class="field">
+            <label>Isolamento Termico Tetto</label>
+            <select name="isolamentoTetto"><option value=""></option><option>Sì</option><option>No</option></select>
+          </div>
+          <div class="field">
+            <label>Tetto Ventilato</label>
+            <select name="tettoVentilato"><option value=""></option><option>Sì</option><option>No</option></select>
+          </div>
+          <div class="field">
+            <label>Accumulo (Max 700 €/kWh - Max 50.000 €)</label>
+            <select name="accumulo"><option value=""></option><option>Sì</option><option>No</option></select>
+          </div>
+          <div class="field"><label>Capacità Accumulo [kWh]</label><input type="number" step="0.1" name="capacitaAccumulo"></div>
+          <div class="field">
+            <label>Colonnine Ricarica (Max 10.000 €)</label>
+            <select name="colonnineEV"><option value=""></option><option>Sì</option><option>No</option></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">7. CHECKLIST DOCUMENTALE E NOTE</h2>
+        <div class="grid">
+          <div class="field full">
+            <label>Documenti da recuperare dal Cliente</label>
+            <div class="check-grid">
+              <label class="check-item"><input type="checkbox"> Visura Catastale e Planimetria dell'immobile</label>
+              <label class="check-item"><input type="checkbox"> Contratto Registrato (se in affitto)</label>
+              <label class="check-item"><input type="checkbox"> Bollette EE di 12 mesi consecutivi</label>
+              <label class="check-item"><input type="checkbox"> Fatture combustibili (se presenti)</label>
+              <label class="check-item"><input type="checkbox"> Dossier fotografico (min. 5 foto tetto/edificio)</label>
+              <label class="check-item"><input type="checkbox"> Report PDF del tool PVGIS</label>
+              <label class="check-item"><input type="checkbox"> Relazione Strumentalità (se cat. diversa da D/10)</label>
+            </div>
+          </div>
+          <div class="field full" style="margin-top: 14px;">
+            <label>Note e Osservazioni di Sopralluogo</label>
+            <textarea name="noteSopralluogo" placeholder="Inserisci note su ombreggiamenti, struttura del tetto, cavidotti..."></textarea>
+          </div>
+        </div>
+      </div>
+
+    </form>
+    
+    <div class="footer-copyright">
+      &copy; <span id="annoCorrente"></span> HUB Società di Ingegneria S.r.l. - Tutti i diritti riservati.<br>
+      <small>Modello riservato per uso aziendale interno.</small>
+    </div>
+
+  </div>
+
+  <script>
+    // --- GESTIONE LOGIN / PASSWORD ---
+    document.addEventListener("DOMContentLoaded", () => {
+      // Imposta anno corrente nel footer
+      document.getElementById('annoCorrente').textContent = new Date().getFullYear();
+
+      // Controllo sessione per mostrare o nascondere il login
+      if (sessionStorage.getItem('hub_auth') === 'true') {
+        document.getElementById('login-overlay').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+      }
+      
+      // Inizializza i campi dinamici di base
+      addEEBill();
+      addGasBill();
+    });
+
+    // Permette di premere "Invio" sulla tastiera per fare il login
+    document.getElementById('password-input').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        checkPassword();
+      }
+    });
+
+    function checkPassword() {
+      const pwd = document.getElementById('password-input').value;
+      if (pwd === 'HUB2026') {
+        sessionStorage.setItem('hub_auth', 'true');
+        document.getElementById('login-overlay').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+      } else {
+        document.getElementById('login-error').style.display = 'block';
+      }
+    }
+
+    // Variabili per i contatori dei blocchi dinamici
+    let eeBillCount = 0;
+    let gasBillCount = 0;
+
+    // --- FUNZIONI PER BOLLETTE EE DINAMICHE ---
+    function addEEBill() {
+      eeBillCount++;
+      const container = document.getElementById('ee-bills-container');
+      const removeBtn = eeBillCount > 1 
+        ? `<button type="button" onclick="removeEEBill(${eeBillCount})" style="background: transparent; color: var(--danger); border: none; font-size: 0.95rem; cursor: pointer; font-weight: bold; text-decoration: underline;">✖ Rimuovi</button>` : `<span></span>`;
+
+      const html = `
+        <div id="ee-bill-${eeBillCount}" style="background: #fafafa; border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; margin-bottom: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px dashed #d1d5db; padding-bottom: 8px;">
+            <h3 style="margin: 0; font-size: 1.05rem; color: var(--primary-dark);">Bolletta Elettrica #${eeBillCount}</h3>
+            ${removeBtn}
+          </div>
+          <div class="grid-3">
+            <div class="field"><label>Mese / Bimestre</label><input name="periodoEE_${eeBillCount}" placeholder="Es. Gennaio"></div>
+            <div class="field"><label>Consumo [kWh]</label><input type="number" step="1" name="consumoEE_${eeBillCount}"></div>
+            <div class="field"><label>Costo [€]</label><input type="number" step="0.01" name="costoEE_${eeBillCount}"></div>
+          </div>
+        </div>
+      `;
+      container.insertAdjacentHTML('beforeend', html);
+    }
+    
+    function removeEEBill(id) { 
+      const unit = document.getElementById(`ee-bill-${id}`); 
+      if (unit) unit.remove(); 
+    }
+
+    // --- FUNZIONI PER FATTURE COMBUSTIBILI (GAS/TERMICO) DINAMICHE ---
+    function addGasBill() {
+      gasBillCount++;
+      const container = document.getElementById('gas-bills-container');
+      const removeBtn = gasBillCount > 1 
+        ? `<button type="button" onclick="removeGasBill(${gasBillCount})" style="background: transparent; color: var(--danger); border: none; font-size: 0.95rem; cursor: pointer; font-weight: bold; text-decoration: underline;">✖ Rimuovi</button>` : `<span></span>`;
+
+      const html = `
+        <div id="gas-bill-${gasBillCount}" style="background: #fafafa; border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; margin-bottom: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px dashed #d1d5db; padding-bottom: 8px;">
+            <h3 style="margin: 0; font-size: 1.05rem; color: var(--primary-dark);">Fattura Combustibile #${gasBillCount}</h3>
+            ${removeBtn}
+          </div>
+          <div class="grid-3">
+            <div class="field">
+              <label>Tipo Combustibile</label>
+              <select name="tipoGas_${gasBillCount}">
+                <option value=""></option>
+                <option>Gas Metano</option>
+                <option>GPL</option>
+                <option>Gasolio Agricolo/Riscaldamento</option>
+                <option>Biomasse (Pellet/Cippato)</option>
+              </select>
+            </div>
+            <div class="field"><label>Quantità (Smc, Litri o Kg)</label><input type="number" step="1" name="consumoGas_${gasBillCount}"></div>
+            <div class="field"><label>Mese / Periodo</label><input name="periodoGas_${gasBillCount}" placeholder="Es. I Trimestre"></div>
+          </div>
+        </div>
+      `;
+      container.insertAdjacentHTML('beforeend', html);
+    }
+
+    function removeGasBill(id) { 
+      const unit = document.getElementById(`gas-bill-${id}`); 
+      if (unit) unit.remove(); 
+    }
+  </script>
+</body>
+</html>
